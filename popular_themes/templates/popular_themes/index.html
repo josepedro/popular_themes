@@ -1,7 +1,7 @@
 {% if sorted_theme_list %}
     <ul>
     {% for theme in sorted_theme_list %}
-       <li>{{ theme.name }}</li>
+       <li>id: {{ theme.id }} - name: {{ theme.name }}</li>
     {% endfor %}
     </ul>
 {% else %}
