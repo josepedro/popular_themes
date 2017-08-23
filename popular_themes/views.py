@@ -7,9 +7,8 @@ from .models import Video
 from .models import Comment
 from .models import Thumb
 
-def get_popular_themes(request):
-
-	# calculate score videos
+def sort_themes_by_score():
+    # calculate score videos
     videos_list = Video.objects.all()
     scores_themes = dict()
     for theme in Theme.objects.all():
@@ -34,6 +33,9 @@ def get_popular_themes(request):
         themes = video.themes.all()
         for theme in themes:
             scores_themes[theme.id] += score
-    sorted_theme_list = sorted(Theme.objects.all(), key=lambda theme: scores_themes[theme.id], reverse=True)
+    return sorted(Theme.objects.all(), key=lambda theme: scores_themes[theme.id], reverse=True)
+
+def get_popular_themes(request):
+    sorted_theme_list = sort_themes_by_score()
     context = {'sorted_theme_list': sorted_theme_list}
     return render(request, 'popular_themes/index.html', context)
