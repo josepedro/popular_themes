@@ -1,10 +1,10 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from datetime import datetime
 
 def validate_date(date):
-    if date.year - datetime.now.year != 0:
-       raise ValidationError(
-        _('video have more than 1 year old'),
-    )
+    if not datetime.now().year - date.year <= 1:
+       raise ValidationError('video have more than 1 year old')
 
 class Theme(models.Model):
     name =  models.CharField(max_length=200)
